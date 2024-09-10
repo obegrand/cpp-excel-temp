@@ -145,6 +145,21 @@ public:
 // Реализуйте метод Evaluate() для бинарных операций.
 // При делении на 0 выбрасывайте ошибку вычисления FormulaError
 	double Evaluate() const override {
+		switch (type_) {
+		case Add:
+			return lhs_->Evaluate() + rhs_->Evaluate();
+		case Subtract:
+			return lhs_->Evaluate() - rhs_->Evaluate();
+		case Multiply:
+			return lhs_->Evaluate() * rhs_->Evaluate();
+		case Divide:
+			if (rhs_->Evaluate() == 0.0) throw FormulaError("ARITHM");
+			return lhs_->Evaluate() / rhs_->Evaluate();
+		default:
+			// have to do this because VC++ has a buggy warning
+			assert(false);
+			return static_cast<ExprPrecedence>(INT_MAX);
+		}
 	}
 
 private:
@@ -183,6 +198,8 @@ public:
 
 // Реализуйте метод Evaluate() для унарных операций.
 	double Evaluate() const override {
+		if (type_ == UnaryPlus) return operand_->Evaluate();
+		else return operand_->Evaluate() * -1.;
 	}
 
 private:
