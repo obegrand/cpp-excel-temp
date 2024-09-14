@@ -4,6 +4,7 @@
 #include "common.h"
 
 #include <functional>
+#include <unordered_map>
 
 class SheetHasher {
 public:

@@ -13,8 +13,8 @@ using namespace std::literals;
 Sheet::~Sheet() {}
 
 void Sheet::SetCell(Position pos, std::string text) {
-    if (!pos.IsValid()) throw InvalidPositionException("Invalid position");
-    sheet_[pos].Set(std::move(text));
+    if (pos.IsValid()) sheet_[pos].Set(std::move(text)); 
+    else throw InvalidPositionException("Invalid position");
 }
 
 const CellInterface* Sheet::GetCell(Position pos) const {
